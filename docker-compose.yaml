@@ -7,7 +7,7 @@ services:
       - /app/node_modules
     ports:
       - 3100:80
-    command: ["npx", "nodemon", "app.js", "-L"]
+    command: ["npm", "run", "debug"]
   mysql:
     image: mysql:8.0.35
     volumes:
