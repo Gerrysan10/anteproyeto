@@ -2,40 +2,73 @@ CREATE DATABASE IF NOT EXISTS gym;
 
 USE gym;
 
-CREATE TABLE vigilantes (
-    id_vigilante INTEGER NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(128) NOT NULL,
-    apellidos VARCHAR(255) NOT NULL,
-    correo VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id_vigilante)
+-- Crear la tabla Usuarios
+CREATE TABLE Usuarios (
+    IDUsuario INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Correo VARCHAR(100),
+    Contraseña VARCHAR(255),
+    FechaNacimiento DATE,
 );
 
-CREATE TABLE edificios (
-    id_edificio INTEGER NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id_edificio)
+-- Crear la tabla Rutinas
+CREATE TABLE Rutinas (
+    IDRutina INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Descripcion TEXT,
+    IDUsuario INT,
+    FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario),
 );
 
-CREATE TABLE reporte_edificio (
-    id_reporte_edificio INTEGER NOT NULL AUTO_INCREMENT,
-    nota VARCHAR(255) NOT NULL,
-    fecha DATE,
-    hora TIME,
-    fk_id_edificio INTEGER,
-    FOREIGN KEY (fk_id_edificio) REFERENCES edificios(id_edificio),
-    PRIMARY KEY (id_reporte_edificio)
+-- Crear la tabla Ejercicios
+CREATE TABLE Ejercicios (
+    IDEjercicio INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    GrupoMuscular VARCHAR(50),
+    Descripcion TEXT,
+    OtrosCamposDeEjercicio TEXT
 );
 
-CREATE TABLE reporte_ruta (
-    id_reporte INTEGER NOT NULL AUTO_INCREMENT,
-    fk_id_vigilante INTEGER,
-    FOREIGN KEY (fk_id_vigilante) REFERENCES vigilantes(id_vigilante),
-    PRIMARY KEY (id_reporte)
+-- Crear la tabla RutinasEjercicios
+CREATE TABLE RutinasEjercicios (
+    IDRutinaEjercicio INT PRIMARY KEY,
+    IDRutina INT,
+    IDEjercicio INT,
+    Repeticiones INT,
+    Peso FLOAT,
+    FOREIGN KEY (IDRutina) REFERENCES Rutinas(IDRutina),
+    FOREIGN KEY (IDEjercicio) REFERENCES Ejercicios(IDEjercicio)
 );
 
-CREATE TABLE detalle_ruta (
-    fk_id_reporte INTEGER,
-    fk_id_reporte_edificio INTEGER,
-    FOREIGN KEY (fk_id_reporte) REFERENCES reporte_ruta(id_reporte),
-    FOREIGN KEY (fk_id_reporte_edificio) REFERENCES reporte_edificio(id_reporte_edificio)
+-- Crear la tabla RegistroCorporal
+CREATE TABLE RegistroCorporal (
+    IDRegistro INT PRIMARY KEY,
+    IDUsuario INT,
+    Fecha DATE,
+    Peso FLOAT,
+    GrasaCorporal FLOAT,
+    MedidaBrazo FLOAT,
+    OtrasMedidas TEXT,
+    FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario)
 );
+
+-- Crear la tabla ProgresoCargas
+CREATE TABLE ProgresoCargas (
+    IDProgreso INT PRIMARY KEY,
+    IDUsuario INT,
+    Fecha DATE,
+    Repeticiones INT,
+    Peso FLOAT,
+    FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario)
+);
+
+-- Crear la tabla Comunidad
+CREATE TABLE Comunidad (
+    IDComunidad INT PRIMARY KEY,
+    IDUsuario INT,
+    Mensaje TEXT,
+    FechaPublicacion DATETIME,
+    FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario)
+);
+
