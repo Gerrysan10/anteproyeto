@@ -1,13 +1,13 @@
-const VigilantesModel = require('../models/vigilantes');
+const UsuarioModel = require('../models/usuarios');
 
-class VigilantesController {
+class UsuarioController {
     static async indexGet(req, res) {
-        let data = await VigilantesModel.consultar();
+        let data = await UsuarioModel.consultar();
         res.send(data);
     }
     static async itemGet(req, res) {
         let id = req.params.id;
-        let data = await VigilantesModel.consultarPorId(id);
+        let data = await UsuarioModel.consultarPorId(id);
         if (data.length == 0) {
             res.status(404).send({errno: 404, error: 'Not found'});
             return;
@@ -16,4 +16,4 @@ class VigilantesController {
     }
 }
 
-module.exports = VigilantesController;
+module.exports = UsuarioController;

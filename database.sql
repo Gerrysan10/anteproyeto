@@ -27,7 +27,6 @@ CREATE TABLE Ejercicios (
     Nombre VARCHAR(100),
     GrupoMuscular VARCHAR(50),
     Descripcion TEXT,
-    OtrosCamposDeEjercicio TEXT
 );
 
 -- Crear la tabla RutinasEjercicios
@@ -49,7 +48,6 @@ CREATE TABLE RegistroCorporal (
     Peso FLOAT,
     GrasaCorporal FLOAT,
     MedidaBrazo FLOAT,
-    OtrasMedidas TEXT,
     FOREIGN KEY (IDUsuario) REFERENCES Usuarios(IDUsuario)
 );
 
