@@ -7,6 +7,8 @@ services:
       - /app/node_modules
     ports:
       - 3100:80
+    secrets:
+      - db_password
     command: ["npm", "run", "debug"]
   mysql:
     image: mysql:8.0.35
@@ -17,9 +19,17 @@ services:
     ports:
       - 3307:3306
     environment:
-      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
       MYSQL_DATABASE: gym
       MYSQL_USER: user_gym
-      MYSQL_PASSWORD: 54321
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_root_password
+      - db_password
 volumes:
   mysql_data:
+secrets:
+  db_root_password:
+    file: ./.secrets/db_root_password.txt
+  db_password:
+    file: ./.secrets/db_password.txt
