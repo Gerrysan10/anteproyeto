@@ -10,6 +10,15 @@ class ComunidadoModel {
         let db = await connectToMysql();
         return await db('Comunidad').where('IDComunidad', id);
     }
+    static async insertar(datos) {
+        let db = await connectToMysql();
+        const result = await db('Comunidad').insert(datos).returning('IDComunidad');
+        return result[0];
+    }
+    static async actualizar(id, campos) {
+        let db = await connectToMysql();
+        return await db('Comunidad').where('IDComunidad', id).update(campos);
+    }
 }
 
 module.exports = ComunidadoModel;

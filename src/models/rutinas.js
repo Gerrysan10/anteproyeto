@@ -10,6 +10,15 @@ class RutinaModel {
         let db = await connectToMysql();
         return await db('Rutinas').where('IDRutina', id);
     }
+    static async insertar(datos) {
+        let db = await connectToMysql();
+        const result = await db('Rutinas').insert(datos).returning('IDRutina');
+        return result[0];
+    }
+    static async actualizar(id, campos) {
+        let db = await connectToMysql();
+        return await db('Rutinas').where('IDRutina', id).update(campos);
+    }
 }
 
 module.exports = RutinaModel;

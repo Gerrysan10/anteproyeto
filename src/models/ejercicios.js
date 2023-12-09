@@ -10,6 +10,15 @@ class EjercicioModel {
         let db = await connectToMysql();
         return await db('Ejercicios').where('IDEjercicio', id);
     }
+    static async insertar(datos) {
+        let db = await connectToMysql();
+        const result = await db('Ejercicios').insert(datos).returning('IDEjercicio');
+        return result[0];
+    }
+    static async actualizar(id, campos) {
+        let db = await connectToMysql();
+        return await db('Ejercicios').where('IDEjercicio', id).update(campos);
+    }
 }
 
 module.exports = EjercicioModel;
